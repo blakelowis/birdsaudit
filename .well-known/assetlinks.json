@@ -1,1 +1,8 @@
-
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.blakelowis.twa",
+        "sha256_cert_fingerprints": ["F3:39:66:6C:4D:76:67:6C:0A:84:2D:4F:AA:CF:75:66:4B:BA:BE:17:DA:9A:9A:4F:D5:02:13:9B:C8:05:7A:8A"]
+      }
+    }]
