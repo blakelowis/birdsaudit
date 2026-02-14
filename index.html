@@ -3,63 +3,44 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>Retail Audit (Modular) — Manual Question Upload</title>
+  <title>Retail Audit (Modular) — Birds Bakery</title>
   <meta name="theme-color" content="#47b39d"/>
   
   <style>
-    /* --- Base Styles --- */
+    /* Integrated Styles from your original file */
     @page { size: landscape; }
-    :root {
+    :root{
       --bg:#f6faf8; --card:#ffffff; --ink:#1f2937; --muted:#667085; --border:#e6eae7;
       --brand:#0ea5e9; --accent:#47b39d; --accent2:#10b981; --ring:#e5e7eb;
       --touch: 44px; --danger:#ef4444;
     }
-    * { box-sizing:border-box; }
-    html, body { height:100%; margin:0; }
-    body { background:var(--bg); color:var(--ink); font:14px/1.45 system-ui,-apple-system,sans-serif; -webkit-tap-highlight-color:transparent; padding-bottom: 84px; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;padding-bottom: 84px;}
+    header{position:sticky;top:0;z-index:50;background:#111827;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    header h1{font-size:18px;margin:0;display:flex;gap:10px;align-items:center}
+    .brand-chip{width:28px;height:28px;border-radius:8px;border:1px solid #374151;background:#fff;overflow:hidden;display:grid;place-items:center}
+    .brand-chip img{max-width:100%;max-height:100%;display:block}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-left:auto}
+    .btn{appearance:none;border:none;border-radius:10px;padding:10px 12px;font-weight:700;cursor:pointer;color:#fff;background:var(--accent);min-height:var(--touch)}
+    .btn.ghost{background:transparent;border:2px solid #fff;color:#fff}
+    .btn.green{background:var(--accent2)}
+    .wrap{max-width:1120px;margin:0 auto;padding:14px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:0 1px 2px rgba(0,0,0,.06);margin-bottom:12px}
     
-    /* --- Layout Components --- */
-    header { position:sticky; top:0; z-index:50; background:#111827; color:#fff; padding:12px 16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
-    header h1 { font-size:18px; margin:0; display:flex; gap:10px; align-items:center; }
-    .brand-chip { width:28px; height:28px; border-radius:8px; border:1px solid #374151; background:#fff; overflow:hidden; display:grid; place-items:center; }
-    .brand-chip img { max-width:100%; max-height:100%; display:block; }
-    .actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-left:auto; }
-    
-    .wrap { max-width:1120px; margin:0 auto; padding:14px; }
-    .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px; box-shadow:0 1px 2px rgba(0,0,0,.06); margin-bottom:12px; }
-    
-    /* --- Buttons & Inputs --- */
-    .btn { appearance:none; border:none; border-radius:10px; padding:10px 12px; font-weight:700; cursor:pointer; color:#fff; background:var(--accent); min-height: var(--touch); }
-    .btn.ghost { background:transparent; border:2px solid #fff; color:#fff; }
-    .btn.green { background:var(--accent2); }
-    .btn.small { padding:6px 8px; border-radius:8px; min-height: 32px; }
-
-    /* --- Score & Stats --- */
-    .scorecard { display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
-    .donut { width:120px; height:120px; }
-    .stat b { font-size:1.25rem; }
-    .hint { color:var(--muted); font-size:.95rem; }
-
-    /* --- Questions & Answers --- */
-    .q { border-top:1px dashed var(--border); padding:14px 0; margin-top:12px; }
-    .q:first-child { border-top:none; }
-    .qtitle { font-weight:700; font-size:1rem; line-height:1.35; }
-    .answers { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:10px; }
-    .answers label { border: 2px solid var(--border); padding: 10px 14px; border-radius: 12px; background: #fff; cursor:pointer; font-weight:700; }
-    .answers input[type="radio"] { position: absolute; opacity: 0; width:0; height:0; }
-    
-    /* Checked State */
-    .answers label:has(input:checked) { border-color: var(--brand); background: linear-gradient(90deg, var(--brand), #60a5fa); color: #fff; }
-
-    /* --- Media Queries --- */
-    @media (max-width: 720px) {
-      header .actions { width: 100%; justify-content: flex-start; }
-    }
-    @media (prefers-color-scheme: dark) {
-      :root { --bg:#0b1411; --card:#0f1a16; --ink:#f1f5f9; --muted:#9aa4b2; --border:#1f2b25; }
-      body { background:var(--bg); color:var(--ink); }
-      .card { background: #0f1a16; }
-    }
+    /* Scoring & Action Plan Specifics */
+    .scorecard{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+    .donut{width:120px;height:120px}
+    .stat b{font-size:1.25rem}
+    .tiles{display:grid;gap:10px;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr))}
+    .tile{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer}
+    .q{border-top:1px dashed var(--border);padding-top:12px;margin-top:12px}
+    .answers{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .answers label{border:1px solid var(--border);padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:700}
+    .answers label:has(input:checked){background:var(--brand);color:#fff;border-color:var(--brand)}
+    .answers input{display:none}
+    #apTable{width:100%;border-collapse:collapse;margin-top:6px}
+    #apTable th,#apTable td{border:1px solid var(--border);padding:8px;text-align:left;font-size:13px}
   </style>
 
   <link rel="manifest" href="manifest.json">
@@ -67,102 +48,122 @@
 <body>
 
   <header>
-    <h1><span class="brand-chip"><img id="hdrLogo" alt="Logo"/></span> Birds Audit</h1>
+    <h1><span class="brand-chip"><img id="hdrLogo" alt="Logo"/></span> Birds Retail Audit</h1>
     <div class="actions">
+      <span id="saveStatus" class="pill" style="color:#9ca3af;font-size:12px">Ready</span>
       <label class="btn ghost">Load JSON <input id="seedPicker" type="file" accept="application/json" hidden /></label>
-      <button class="btn ghost" id="saveBtn">Save</button>
-      <button class="btn green" id="exportBtn">Export HTML</button>
+      <button class="btn ghost" id="saveBtn">Save State</button>
+      <button class="btn green" id="exportBtn">Export Report</button>
     </div>
   </header>
 
   <div class="wrap">
     <section id="meta" class="card">
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
-        <label class="hint">Store Name<input id="storeName" type="text" style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--border);"></label>
-        <label class="hint">Auditor<input id="auditorName" type="text" style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--border);"></label>
-        <label class="hint">Date<input id="auditDate" type="date" style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--border);"></label>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+        <label class="hint">Store Name<input id="storeName" type="text" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px"></label>
+        <label class="hint">Auditor<input id="auditorName" type="text" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px"></label>
+        <label class="hint">Date<input id="auditDate" type="date" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px"></label>
       </div>
     </section>
 
-    <main id="pane" class="card">
-      <div class="hint">No questions loaded. Please upload a .json question set to begin.</div>
-    </main>
+    <section class="card">
+      <div class="scorecard">
+        <svg class="donut" viewBox="0 0 42 42">
+          <circle cx="21" cy="21" r="18" fill="transparent" stroke="var(--ring)" stroke-width="6"></circle>
+          <circle id="donutVal" cx="21" cy="21" r="18" fill="transparent" stroke="var(--brand)" stroke-width="6" stroke-dasharray="0 113" transform="rotate(-90 21 21)"></circle>
+          <text id="donutText" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="8" font-weight="800">0%</text>
+        </svg>
+        <div class="stat"><div class="hint">Answered</div><b id="answeredCount">0</b></div>
+        <div class="stat"><div class="hint">Score</div><b id="scorePct">0%</b></div>
+      </div>
+    </section>
+
+    <div class="crumbs" id="crumbs" style="margin:10px 0; color:var(--brand); cursor:pointer">Main Menu</div>
+
+    <section id="pane" class="card">
+      <div class="hint">Please load a Question Set (.json) to begin the audit.</div>
+    </section>
 
     <section id="actionPanel" class="card">
       <h3>Action Plan</h3>
-      <div id="apBody">No issues flagged yet.</div>
+      <table id="apTable">
+        <thead>
+          <tr><th>Category</th><th>Issue</th><th>Action Required</th><th>Status</th></tr>
+        </thead>
+        <tbody id="apBody"></tbody>
+      </table>
     </section>
   </div>
 
   <script>
-    // --- Service Worker Registration ---
+    // --- PWA Service Worker ---
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW failed', err));
+        navigator.serviceWorker.register('./sw.js');
       });
     }
 
-    // --- State Management ---
-    let state = { meta: {}, sectors: {} };
+    // --- State & Logic ---
+    let state = { sectors: {}, meta: {} };
 
     // Placeholder Logo
-    const EMBEDDED_LOGO = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="40" fill="%2347b39d"/></svg>';
-    document.getElementById('hdrLogo').src = EMBEDDED_LOGO;
+    document.getElementById('hdrLogo').src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="40" fill="%2347b39d"/></svg>';
 
-    // Load JSON Logic
+    // Load JSON
     document.getElementById('seedPicker').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = function(evt) {
+      reader.onload = (evt) => {
         try {
           state.sectors = JSON.parse(evt.target.result);
-          renderApp();
-        } catch(err) {
-          alert("Error parsing JSON file.");
-        }
+          renderSectors();
+        } catch(err) { alert("Invalid JSON format"); }
       };
       reader.readAsText(file);
     });
 
-    function renderApp() {
+    function renderSectors() {
       const pane = document.getElementById('pane');
-      pane.innerHTML = '';
+      pane.innerHTML = '<div class="tiles"></div>';
+      const grid = pane.querySelector('.tiles');
       
-      // Simple rendering of sectors/questions
-      Object.keys(state.sectors).forEach(key => {
-        const sector = state.sectors[key];
-        const secEl = document.createElement('div');
-        secEl.innerHTML = `<h2>${sector.title}</h2>`;
-        
-        sector.categories?.forEach(cat => {
-          const catEl = document.createElement('div');
-          catEl.innerHTML = `<h3>${cat.name}</h3>`;
-          
-          cat.questions?.forEach(q => {
-            const qEl = document.createElement('div');
-            qEl.className = 'q';
-            qEl.innerHTML = `
-              <div class="qtitle">${q.text}</div>
-              <div class="answers">
-                <label><input type="radio" name="q_${q.id}" value="Pass"> Pass</label>
-                <label><input type="radio" name="q_${q.id}" value="Fail"> Fail</label>
-                <label><input type="radio" name="q_${q.id}" value="NA"> N/A</label>
-              </div>
-            `;
-            catEl.appendChild(qEl);
-          });
-          secEl.appendChild(catEl);
-        });
-        pane.appendChild(secEl);
+      Object.keys(state.sectors).forEach(id => {
+        const sec = state.sectors[id];
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+        tile.innerHTML = `<h3>${sec.title}</h3><p>Click to open categories</p>`;
+        tile.onclick = () => renderCategories(id);
+        grid.appendChild(tile);
       });
     }
 
-    // Save Button
-    document.getElementById('saveBtn').addEventListener('click', () => {
-      localStorage.setItem('audit_backup', JSON.stringify(state));
-      alert("Progress saved locally!");
-    });
+    function renderCategories(sectorId) {
+      const pane = document.getElementById('pane');
+      const sector = state.sectors[sectorId];
+      pane.innerHTML = `<h2>${sector.title}</h2>`;
+      
+      sector.categories.forEach(cat => {
+        const catDiv = document.createElement('div');
+        catDiv.innerHTML = `<h4 style="margin-top:20px">${cat.name}</h4>`;
+        cat.questions.forEach(q => {
+          const qDiv = document.createElement('div');
+          qDiv.className = 'q';
+          qDiv.innerHTML = `
+            <p>${q.text}</p>
+            <div class="answers">
+              <label><input type="radio" name="q_${q.id}" value="Pass"> Pass</label>
+              <label><input type="radio" name="q_${q.id}" value="Fail"> Fail</label>
+              <label><input type="radio" name="q_${q.id}" value="NA"> N/A</label>
+            </div>
+          `;
+          catDiv.appendChild(qDiv);
+        });
+        pane.appendChild(catDiv);
+      });
+    }
+
+    document.getElementById('crumbs').onclick = renderSectors;
   </script>
 </body>
 </html>
