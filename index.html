@@ -3,166 +3,227 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>Birds Audit — Retail Audit Modular</title>
+  <title>Retail Audit (Modular) — Birds Bakery</title>
   <meta name="theme-color" content="#47b39d"/>
+  <link rel="manifest" href="manifest.json">
   <style>
+    @page { size: landscape; }
     :root{
       --bg:#f6faf8; --card:#ffffff; --ink:#1f2937; --muted:#667085; --border:#e6eae7;
       --brand:#0ea5e9; --accent:#47b39d; --accent2:#10b981; --ring:#e5e7eb;
-      --touch: 44px;
+      --touch: 44px; --danger:#ef4444;
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,sans-serif;padding-bottom:84px}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,sans-serif;-webkit-tap-highlight-color:transparent;padding-bottom: 84px;}
     header{position:sticky;top:0;z-index:50;background:#111827;color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
     header h1{font-size:18px;margin:0;display:flex;gap:10px;align-items:center}
-    .brand-chip{width:28px;height:28px;border-radius:8px;background:#fff;display:grid;place-items:center;overflow:hidden}
-    .brand-chip img{max-width:100%}
-    .actions{display:flex;gap:8px;margin-left:auto}
-    .btn{appearance:none;border:none;border-radius:10px;padding:10px 12px;font-weight:700;cursor:pointer;color:#fff;background:var(--accent);min-height:var(--touch)}
-    .btn.ghost{background:transparent;border:2px solid #fff}
+    .brand-chip{width:28px;height:28px;border-radius:8px;border:1px solid #374151;background:#fff;overflow:hidden;display:grid;place-items:center}
+    .brand-chip img{max-width:100%;max-height:100%;display:block}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-left:auto}
+    .btn{appearance:none;border:none;border-radius:10px;padding:10px 12px;font-weight:700;cursor:pointer;color:#fff;background:var(--accent);min-height:var(--touch);display:inline-flex;align-items:center;justify-content:center}
+    .btn.ghost{background:transparent;border:2px solid #fff;color:#fff}
+    .btn.green{background:var(--accent2)}
     .wrap{max-width:1120px;margin:0 auto;padding:14px}
     .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:0 1px 2px rgba(0,0,0,.06);margin-bottom:12px}
+    #meta .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
     .scorecard{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
     .donut{width:120px;height:120px}
     .stat b{font-size:1.25rem;display:block}
-    .tiles{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    .tile{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:background .2s}
+    .tiles{display:grid;gap:10px;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr))}
+    .tile{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;position:relative}
     .tile:hover{background:#f3f4f6}
     .q{border-top:1px dashed var(--border);padding-top:12px;margin-top:12px}
-    .answers{display:flex;gap:10px;margin-top:8px}
-    .answers label{padding:10px 16px;border:2px solid var(--border);border-radius:12px;cursor:pointer;font-weight:700}
+    .answers{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+    .answers label{border:1px solid var(--border);padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:700;transition:all 0.2s}
     .answers input{display:none}
-    .answers label:has(input:checked){background:var(--brand);color:#fff;border-color:var(--brand)}
-    .crumbs{margin:10px 0;display:flex;gap:8px;color:var(--brand);font-weight:700;cursor:pointer}
-    #apTable{width:100%;border-collapse:collapse}
-    #apTable th,#apTable td{border:1px solid var(--border);padding:8px;text-align:left;font-size:13px}
-    .thumb{width:96px;height:96px;border-radius:8px;object-fit:cover;margin-top:8px;display:none}
+    .answers label:has(input:checked[value="Pass"]){background:var(--accent2);color:#fff;border-color:var(--accent2)}
+    .answers label:has(input:checked[value="Fail"]){background:var(--danger);color:#fff;border-color:var(--danger)}
+    #apTable{width:100%;border-collapse:collapse;margin-top:10px}
+    #apTable th,#apTable td{border:1px solid var(--border);padding:10px;text-align:left;font-size:13px}
+    .photo-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(80px, 1fr));gap:8px;margin-top:8px}
+    .img-preview{width:80px;height:80px;border-radius:8px;object-fit:cover;border:1px solid var(--border)}
     @media (prefers-color-scheme: dark){
       :root{--bg:#0b1411;--card:#0f1a16;--ink:#f1f5f9;--border:#1f2b25}
-      body{background:var(--bg);color:var(--ink)}
+      header{background:#000}
+    }
+    @media print{
+      .no-print, header, .actions, #seedPicker {display:none !important}
+      .card {box-shadow:none; border:1px solid #ccc}
     }
   </style>
-  <link rel="manifest" href="manifest.json">
 </head>
-<body>
+  <body>
   <header>
-    <h1><div class="brand-chip"><img id="hdrLogo"></div> Birds Audit</h1>
+    <h1><span class="brand-chip"><img id="hdrLogo" alt="Logo"/></span> Birds Audit</h1>
     <div class="actions">
-      <label class="btn ghost">Load JSON <input id="seedPicker" type="file" accept="application/json" hidden></label>
+      <label class="btn ghost">Load Template <input id="seedPicker" type="file" accept="application/json" hidden /></label>
       <button class="btn ghost" id="saveBtn">Save State</button>
-      <button class="btn" style="background:var(--accent2)" id="exportBtn">Export Report</button>
+      <button class="btn green" id="exportBtn">Export Report</button>
+      <button class="btn" style="background:#6366f1" id="buildToggle">Build Mode</button>
     </div>
   </header>
+
   <div class="wrap">
-    <section class="card scorecard">
-      <svg class="donut" viewBox="0 0 42 42">
-        <circle cx="21" cy="21" r="18" fill="transparent" stroke="var(--ring)" stroke-width="6"></circle>
-        <circle id="donutVal" cx="21" cy="21" r="18" fill="transparent" stroke="var(--brand)" stroke-width="6" stroke-dasharray="0 113" transform="rotate(-90 21 21)"></circle>
-        <text id="donutText" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="8" font-weight="800">0%</text>
-      </svg>
-      <div class="stat"><span class="muted">Answered</span><b id="statAnswered">0</b></div>
-      <div class="stat"><span class="muted">Open Actions</span><b id="statActions">0</b></div>
-      <div class="stat"><span class="muted">Score</span><b id="statScore">0%</b></div>
+    <section id="meta" class="card">
+      <div class="grid">
+        <label class="hint">Store Name<input id="storeName" type="text" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px"></label>
+        <label class="hint">Auditor<input id="auditorName" type="text" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px"></label>
+        <label class="hint">Date<input id="auditDate" type="date" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px"></label>
+      </div>
     </section>
-    <div class="crumbs" id="crumbs" style="display:none">← Back to Sectors</div>
-    <main id="pane" class="card">
-      <div class="hint">Upload your Question Set (.json) to begin the audit.</div>
-    </main>
+
     <section class="card">
+      <div class="scorecard">
+        <div style="position:relative; width:120px; height:120px">
+          <svg class="donut" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="18" fill="transparent" stroke="var(--ring)" stroke-width="6"></circle>
+            <circle id="donutVal" cx="21" cy="21" r="18" fill="transparent" stroke="var(--brand)" stroke-width="6" stroke-dasharray="0 113" transform="rotate(-90 21 21)"></circle>
+          </svg>
+          <div id="donutText" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-weight:800; font-size:18px">0%</div>
+        </div>
+        <div class="stat"><span class="hint">Answered</span><b id="answeredCount">0</b></div>
+        <div class="stat"><span class="hint">Issues</span><b id="issueCount" style="color:var(--danger)">0</b></div>
+        <div class="stat"><span class="hint">Final Score</span><b id="scorePct">0%</b></div>
+      </div>
+    </section>
+
+    <div id="navigation" style="margin-bottom:12px; display:none">
+      <button class="btn ghost" style="color:var(--brand); border-color:var(--brand)" onclick="showSectors()">← Back to Sectors</button>
+    </div>
+
+    <main id="mainPane"></main>
+
+    <section id="actionPlan" class="card" style="margin-top:24px">
       <h3>Action Plan Summary</h3>
-      <table id="apTable">
-        <thead><tr><th>Category</th><th>Issue Description</th><th>Action Required</th><th>Status</th></tr></thead>
-        <tbody id="apBody"></tbody>
-      </table>
+      <div style="overflow-x:auto">
+        <table id="apTable">
+          <thead>
+            <tr><th>Category</th><th>Observation</th><th>Required Action</th><th>Status</th></tr>
+          </thead>
+          <tbody id="apBody"></tbody>
+        </table>
+      </div>
     </section>
   </div>
-  <script>
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('./sw.js'); }
-    let state = { sectors: {}, meta: {} };
+    <script>
+    if ('serviceWorker' in navigator) { 
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+    }
+
+    let state = { meta: {}, sectors: {}, buildMode: false };
     const $ = s => document.querySelector(s);
 
-    // Placeholder Logo
+    // Initial Placeholder Logo
     $('#hdrLogo').src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="40" fill="%2347b39d"/></svg>';
 
     $('#seedPicker').onchange = e => {
       const reader = new FileReader();
-      reader.onload = ev => { 
-        state.sectors = JSON.parse(ev.target.result); 
-        renderSectors(); 
+      reader.onload = ev => {
+        try {
+          state.sectors = JSON.parse(ev.target.result);
+          showSectors();
+        } catch(err) { alert("Invalid Template JSON"); }
       };
       reader.readAsText(e.target.files[0]);
     };
 
-    function renderSectors() {
-      $('#crumbs').style.display = 'none';
-      const pane = $('#pane');
+    function showSectors() {
+      $('#navigation').style.display = 'none';
+      const pane = $('#mainPane');
       pane.innerHTML = '<div class="tiles"></div>';
       Object.keys(state.sectors).forEach(id => {
         const sec = state.sectors[id];
         const tile = document.createElement('div');
         tile.className = 'tile';
-        tile.innerHTML = `<h3>${sec.title}</h3><p>Manage categories & questions</p>`;
-        tile.onclick = () => renderCategories(id);
-        $('.tiles').appendChild(tile);
+        tile.innerHTML = `<h3>${sec.title}</h3><p>Manage categories and scoring</p>`;
+        tile.onclick = () => showCategories(id);
+        pane.firstChild.appendChild(tile);
       });
       updateStats();
     }
 
-    function renderCategories(sectorId) {
-      $('#crumbs').style.display = 'block';
-      const pane = $('#pane');
+    function showCategories(sectorId) {
+      $('#navigation').style.display = 'block';
+      const pane = $('#mainPane');
       const sector = state.sectors[sectorId];
       pane.innerHTML = `<h2>${sector.title}</h2>`;
       sector.categories.forEach(cat => {
-        const div = document.createElement('div');
-        div.innerHTML = `<h4 style="margin-top:20px; border-bottom:1px solid var(--border)">${cat.name}</h4>`;
-        cat.questions.forEach(q => div.appendChild(createQuestionEl(q, cat.name)));
-        pane.appendChild(div);
+        const catBox = document.createElement('div');
+        catBox.className = 'card';
+        catBox.innerHTML = `<h3 style="border-bottom:2px solid var(--bg); padding-bottom:8px">${cat.name}</h3>`;
+        cat.questions.forEach(q => catBox.appendChild(createQuestionEl(q, cat.name)));
+        pane.appendChild(catBox);
       });
     }
 
     function createQuestionEl(q, catName) {
-      const wrap = document.createElement('div');
-      wrap.className = 'q';
-      wrap.innerHTML = `
+      const qDiv = document.createElement('div');
+      qDiv.className = 'q';
+      qDiv.innerHTML = `
         <div style="font-weight:600">${q.text}</div>
         <div class="answers">
           <label><input type="radio" name="${q.id}" value="Pass" ${q.answer==='Pass'?'checked':''}> Pass</label>
           <label><input type="radio" name="${q.id}" value="Fail" ${q.answer==='Fail'?'checked':''}> Fail</label>
           <label><input type="radio" name="${q.id}" value="NA" ${q.answer==='NA'?'checked':''}> N/A</label>
         </div>
-        <div id="ap_${q.id}" style="display:${q.answer==='Fail'?'block':'none'}; margin-top:10px; background:#fff5f5; padding:10px; border-radius:8px; border:1px solid #feb2b2">
-           <textarea placeholder="Describe the action needed..." style="width:100%; border:1px solid #fecaca; border-radius:4px">${q.action || ''}</textarea>
+        <div id="fail_extra_${q.id}" style="display:${q.answer==='Fail'?'block':'none'}; margin-top:12px">
+          <textarea id="act_${q.id}" placeholder="Specify required action..." style="width:100%; border-radius:8px; border:1px solid var(--border); padding:8px">${q.action || ''}</textarea>
+          <div class="photo-grid" id="photos_${q.id}"></div>
+          <input type="file" accept="image/*" capture="environment" onchange="processPhoto(event, '${q.id}')" style="margin-top:8px">
         </div>
       `;
-      wrap.querySelectorAll('input').forEach(i => {
-        i.onchange = () => { 
-          q.answer = i.value; 
-          wrap.querySelector(`#ap_${q.id}`).style.display = i.value === 'Fail' ? 'block' : 'none';
-          updateStats(); 
-          renderActionPlan(); 
+      qDiv.querySelectorAll('input[type="radio"]').forEach(rad => {
+        rad.onchange = () => {
+          q.answer = rad.value;
+          $(`#fail_extra_${q.id}`).style.display = rad.value === 'Fail' ? 'block' : 'none';
+          updateStats();
+          renderActionPlan();
         };
       });
-      wrap.querySelector('textarea').oninput = (e) => { q.action = e.target.value; renderActionPlan(); };
-      return wrap;
+      qDiv.querySelector('textarea').oninput = e => { q.action = e.target.value; renderActionPlan(); };
+      return qDiv;
+    }
+      async function processPhoto(e, qid) {
+      const file = e.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = async (ev) => {
+        const img = new Image();
+        img.src = ev.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const max = 800;
+          let w = img.width, h = img.height;
+          if (w > h && w > max) { h *= max / w; w = max; }
+          else if (h > max) { w *= max / h; h = max; }
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          const thumb = canvas.toDataURL('image/jpeg', 0.7);
+          const imgEl = document.createElement('img');
+          imgEl.src = thumb; imgEl.className = 'img-preview';
+          $(`#photos_${qid}`).appendChild(imgEl);
+        };
+      };
+      reader.readAsDataURL(file);
     }
 
     function updateStats() {
-      let answered = 0, total = 0, passed = 0, actions = 0;
+      let ans = 0, passed = 0, fails = 0, total = 0;
       Object.values(state.sectors).forEach(s => s.categories.forEach(c => c.questions.forEach(q => {
         if(q.answer && q.answer !== 'NA') {
-          answered++;
+          ans++;
           if(q.answer === 'Pass') passed++;
-          if(q.answer === 'Fail') actions++;
+          if(q.answer === 'Fail') fails++;
         }
         if(q.answer !== 'NA') total++;
       })));
-      const score = total ? Math.round((passed/total)*100) : 0;
-      $('#statAnswered').innerText = answered;
-      $('#statActions').innerText = actions;
-      $('#statScore').innerText = score + '%';
-      $('#donutText').textContent = score + '%';
-      $('#donutVal').style.strokeDasharray = `${(score/100)*113} 113`;
+      const score = total ? Math.round((passed / total) * 100) : 0;
+      $('#answeredCount').innerText = ans;
+      $('#issueCount').innerText = fails;
+      $('#scorePct').innerText = score + '%';
+      $('#donutText').innerText = score + '%';
+      $('#donutVal').style.strokeDasharray = `${(score / 100) * 113} 113`;
     }
 
     function renderActionPlan() {
@@ -171,14 +232,127 @@
       Object.values(state.sectors).forEach(s => s.categories.forEach(c => c.questions.forEach(q => {
         if(q.answer === 'Fail') {
           const row = body.insertRow();
-          row.innerHTML = `<td>${c.name}</td><td>${q.text}</td><td>${q.action || 'No action specified'}</td><td><b style="color:#e53e3e">OPEN</b></td>`;
+          row.innerHTML = `<td>${s.title}</td><td>${q.text}</td><td>${q.action || 'Pending...'}</td><td><b style="color:var(--danger)">OPEN</b></td>`;
         }
       })));
     }
 
-    $('#crumbs').onclick = renderSectors;
-    $('#saveBtn').onclick = () => { localStorage.setItem('audit_data_backup', JSON.stringify(state)); alert('Progress Saved Locally'); };
+    $('#saveBtn').onclick = () => {
+      localStorage.setItem('birds_audit_save', JSON.stringify(state));
+      alert("State saved to browser memory.");
+    };
+
     $('#exportBtn').onclick = () => window.print();
+
+    $('#buildToggle').onclick = () => {
+      state.buildMode = !state.buildMode;
+      alert("Build mode " + (state.buildMode ? "ON" : "OFF"));
+    };
   </script>
 </body>
 </html>
+// ===== Data Persistence =====
+  function quickSave() {
+    try {
+      localStorage.setItem(WORK_KEY_BASE, JSON.stringify(state));
+      setSaveStatus('saved');
+    } catch (e) {
+      setSaveStatus('error');
+      console.error("Save failed", e);
+    }
+  }
+
+  function setSaveStatus(mode) {
+    const el = document.getElementById('saveStatus');
+    if (!el) return;
+    el.textContent = mode === 'saved' ? 'Saved ✓' : 'Saving...';
+    el.style.color = mode === 'saved' ? 'var(--accent2)' : 'var(--brand)';
+  }
+
+  // ===== Scoring Logic =====
+  function tallySector(sid) {
+    let total = 0, passed = 0, open = 0, answered = 0;
+    const sec = state.sectors[sid];
+    if (!sec) return { pct: 0, open: 0, answered: 0 };
+
+    sec.categories.forEach(cat => {
+      cat.questions.forEach(q => {
+        if (q.answer && q.answer !== 'NA') {
+          answered++;
+          if (q.answer === 'Pass') passed++;
+          if (q.answer === 'Fail') {
+            if (q.action && q.action.enabled && q.action.status !== 'Closed') open++;
+          }
+          total++;
+        }
+      });
+    });
+    return {
+      pct: total ? Math.round((passed / total) * 100) : 0,
+      open: open,
+      answered: answered
+    };
+  }
+
+  function updateOverallScore() {
+    let totalPass = 0, totalCount = 0, totalOpen = 0, totalAns = 0;
+    Object.keys(state.sectors).forEach(sid => {
+      const t = tallySector(sid);
+      totalOpen += t.open;
+      totalAns += t.answered;
+      // Weighting logic could be added here
+    });
+    
+    // Update UI elements
+    const score = calculateGlobalScore();
+    document.getElementById('scorePct').textContent = score + '%';
+    document.getElementById('openActions').textContent = totalOpen;
+    document.getElementById('answered').textContent = totalAns;
+  }
+// ===== Watermark & Branding =====
+  $('#logoPicker').onchange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const data = await readFileAsDataURL(file);
+      state.watermark = data;
+      localStorage.setItem('audit_watermark_v2', data);
+      applyWatermarkToPage();
+    }
+  };
+
+  function applyWatermarkToPage() {
+    if (state.watermark) {
+      const style = document.getElementById('wm-style') || document.createElement('style');
+      style.id = 'wm-style';
+      style.textContent = `body::before { background-image: url("${state.watermark}"); content: ""; position: fixed; inset: 0; opacity: 0.05; pointer-events: none; z-index: -1; background-repeat: no-repeat; background-position: center; }`;
+      document.head.appendChild(style);
+    }
+  }
+
+  // ===== Export logic =====
+  $('#btnExportActionCsv').onclick = () => {
+    let csv = "Sector,Category,Question,Action,Status\n";
+    Object.values(state.sectors).forEach(s => s.categories.forEach(c => c.questions.forEach(q => {
+      if (q.answer === 'Fail') {
+        csv += `"${s.title}","${c.name}","${q.text}","${q.action || ''}","Open"\n`;
+      }
+    })));
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Audit_Action_Plan_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  };
+// ===== Startup =====
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem(WORK_KEY_BASE);
+    if (saved) {
+      try {
+        state = JSON.parse(saved);
+        applyWatermarkToPage();
+        render();
+      } catch (e) { console.error("Restore failed", e); }
+    }
+    render();
+  });
